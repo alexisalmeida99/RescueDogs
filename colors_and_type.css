@@ -1,0 +1,200 @@
+/* ============================================================
+   MIAMI VEIN CENTER — Colors & Type Foundations
+   "Spanish Villa Spa" — warm Mediterranean coastal wellness
+   ------------------------------------------------------------
+   Fonts loaded from Google Fonts CDN (see README — substitution
+   flagged; no original font files were provided).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap');
+
+/* ---------- Self-hosted brand fonts (uploaded variable fonts) ---------- */
+@font-face { font-family:'Inter'; font-style:normal; font-weight:100 900; font-display:swap; src:url('fonts/Inter-VariableFont_opsz_wght.ttf') format('truetype'); }
+@font-face { font-family:'Inter'; font-style:italic; font-weight:100 900; font-display:swap; src:url('fonts/Inter-Italic-VariableFont_opsz_wght.ttf') format('truetype'); }
+@font-face { font-family:'Montserrat'; font-style:normal; font-weight:100 900; font-display:swap; src:url('fonts/Montserrat-VariableFont_wght.ttf') format('truetype'); }
+@font-face { font-family:'Montserrat'; font-style:italic; font-weight:100 900; font-display:swap; src:url('fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype'); }
+
+:root {
+  /* ---------- RAW PALETTE (sampled from brand board) ---------- */
+  /* Neutral Foundations */
+  --plaster-white:    #F8F5F0;
+  --sand-beige:       #E9DBC9;
+  --pale-terracotta:  #D5AC96;
+  --driftwood-taupe:  #BDAC98;
+  /* Coastal Accents */
+  --dusty-blue:       #94ABBC;
+  --sage-green:       #A7BCA3;
+  --sea-glass:        #CED9C9;
+  /* Warm Highlights */
+  --brushed-brass:    #B48D50;
+  --aged-bronze:      #695A49;
+  --natural-linen:    #E9E1D6;
+
+  /* Derived ink scale (warm espresso, from bronze family) */
+  --ink-900: #2C261F;   /* deepest — headlines on light */
+  --ink-700: #463D33;
+  --ink-500: #6E6357;   /* secondary body */
+  --ink-300: #9A8E7F;   /* muted captions */
+
+  /* ---------- SEMANTIC SURFACES ---------- */
+  --bg-page:        #FAF7F1;   /* bright whitewashed plaster */
+  --bg-surface:     #FFFFFF;   /* crisp white cards */
+  --bg-sunken:      #F2ECE2;   /* subtle warm well */
+  --bg-inverse:     #213C52;   /* dark sections — deep Mediterranean blue */
+  --bg-accent-soft: #F4E7DD;   /* soft terracotta wash band */
+  --bg-blue-soft:   #E7EEF2;   /* soft Mediterranean-blue wash band */
+
+  /* ---------- SEMANTIC TEXT ---------- */
+  --fg-1: var(--ink-900);      /* primary text + headings */
+  --fg-2: var(--ink-500);      /* body, secondary */
+  --fg-3: var(--ink-300);      /* captions, meta */
+  --fg-on-dark: #EAF1F4;       /* text on inverse (deep blue) */
+  --fg-on-dark-2: #9FB6C2;
+  --fg-brand: var(--accent);   /* accent text / links */
+
+  /* ---------- ACTION / ACCENT ----------
+     SPANISH VILLA: high contrast between crisp WHITE, saturated
+     TERRACOTTA and Mediterranean BLUE — minimal other neutrals.
+     Blue is primary; terracotta is the equal warm partner. */
+  --accent:        #2E6286;      /* primary accent — Mediterranean tile blue */
+  --accent-deep:   #1F4A68;      /* hover / labels / links */
+  --accent-blue:   #2E6286;
+  --accent-terra:  #D5AC96;      /* terracotta - original from brand board */
+  --accent-terra-deep: #B07F5E;  /* darker terracotta for text/contrast */
+  /* legacy aliases so existing components don't break */
+  --accent-brass:      var(--accent);
+  --accent-brass-deep: var(--accent-deep);
+
+  /* ---------- LINES & HAIRLINES ---------- */
+  --line-1: #ECE4D8;            /* default hairline on white */
+  --line-2: #DAD0C0;            /* stronger divider */
+  --line-gilt: rgba(46,98,134,.38); /* decorative accent rule (blue) */
+
+  /* ============================================================
+     TYPE SYSTEM
+     ============================================================ */
+  /* SPA-EDITORIAL PAIRING
+     Big editorial headlines = elegant serif (Cormorant Garamond).
+     UI, nav, buttons, labels, body = Inter (uploaded brand font). */
+  --font-display: 'Cormorant Garamond', 'Hoefler Text', Georgia, serif; /* hero & H1/H2 */
+  --font-ui:      'Inter', 'Montserrat', 'Helvetica Neue', Arial, sans-serif; /* nav, buttons, eyebrows, H3/H4 */
+  --font-body:    'Inter', 'Montserrat', 'Helvetica Neue', Arial, sans-serif; /* body, UI text */
+  --font-accent:  'Cormorant Garamond', Georgia, serif; /* italic flourish lines */
+
+  /* fluid type scale */
+  --t-display:  clamp(3rem, 6vw, 5.25rem);   /* hero */
+  --t-h1:       clamp(2.25rem, 4vw, 3.5rem);
+  --t-h2:       clamp(1.75rem, 2.6vw, 2.5rem);
+  --t-h3:       1.5rem;
+  --t-h4:       1.25rem;
+  --t-lead:     1.3125rem;   /* intro paragraph */
+  --t-body:     1.0625rem;
+  --t-small:    0.9375rem;
+  --t-eyebrow:  0.78rem;
+
+  /* ---------- RADII ---------- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  /* ---------- SPACING (8pt base) ---------- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --sp-9: 96px; --sp-10: 128px;
+
+  /* ---------- SHADOWS (soft, warm, low) ---------- */
+  --shadow-sm: 0 1px 2px rgba(44,38,31,.06), 0 1px 3px rgba(44,38,31,.05);
+  --shadow-md: 0 6px 18px -8px rgba(44,38,31,.18), 0 2px 6px rgba(44,38,31,.06);
+  --shadow-lg: 0 24px 60px -24px rgba(44,38,31,.28), 0 8px 20px -12px rgba(44,38,31,.14);
+  --shadow-inset: inset 0 1px 2px rgba(44,38,31,.08);
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES (opt-in via .mvc-prose or apply vars)
+   ============================================================ */
+.mvc-eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent-brass-deep);
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-h1);
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+  color: var(--fg-1);
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-h2);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--fg-1);
+}
+h3, .h3 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+}
+.mvc-accent-italic {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--fg-2);
+}
+
+h4, .h4 {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--t-h4);
+  line-height: 1.3;
+  color: var(--fg-1);
+}
+.lead {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--t-lead);
+  line-height: 1.6;
+  color: var(--fg-2);
+}
+p, .body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--t-body);
+  line-height: 1.7;
+  color: var(--fg-2);
+}
+small, .small {
+  font-size: var(--t-small);
+  color: var(--fg-3);
+}
+a { color: var(--accent-brass-deep); text-underline-offset: 3px; }
+
+/* Decorative centered rule with brass dashes, like the brand board */
+.mvc-rule {
+  display: flex; align-items: center; gap: 14px;
+  color: var(--accent-brass);
+}
+.mvc-rule::before, .mvc-rule::after {
+  content: ""; height: 1px; flex: 1;
+  background: linear-gradient(90deg, transparent, var(--line-gilt), transparent);
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Second Chance Dogs</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <div class="logo">Second Chance Dogs &mdash; Admin</div>
+      <nav>
+        <a href="index.html">View site</a>
+        <a href="#" id="signout" style="display:none">Sign out</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <!-- LOGIN -->
+    <div id="loginView" class="panel center-narrow">
+      <h2 style="margin-top:0">Admin sign in</h2>
+      <div id="loginMsg"></div>
+      <div class="field">
+        <label>Email</label>
+        <input id="email" type="email" placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input id="password" type="password" placeholder="Your password" />
+      </div>
+      <button class="btn" id="loginBtn" style="width:100%">Sign in</button>
+      <p class="note">First time? Enter your admin email above and click below to create your account. Only approved emails can edit the site.</p>
+      <button class="btn ghost" id="signupBtn" style="width:100%;margin-top:8px">Create account</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashView" style="display:none">
+      <div class="panel">
+        <h2 id="formTitle" style="margin-top:0">Add a dog</h2>
+        <div id="formMsg"></div>
+        <input type="hidden" id="dogId" />
+        <div class="row2">
+          <div class="field"><label>Name *</label><input id="f_name" /></div>
+          <div class="field"><label>Breed</label><input id="f_breed" placeholder="e.g. Labrador mix" /></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Age</label><input id="f_age" placeholder="e.g. 2 years" /></div>
+          <div class="field"><label>Status</label>
+            <select id="f_status">
+              <option value="available">Available</option>
+              <option value="pending">Pending</option>
+              <option value="adopted">Adopted</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Sex</label>
+            <select id="f_sex"><option value="unknown">Unknown</option><option value="male">Male</option><option value="female">Female</option></select>
+          </div>
+          <div class="field"><label>Size</label>
+            <select id="f_size"><option value="unknown">Unknown</option><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select>
+          </div>
+        </div>
+        <div class="field"><label>Description</label><textarea id="f_desc" placeholder="Personality, history, what kind of home suits them..."></textarea></div>
+        <div class="row2">
+          <div class="field"><label>Contact email (for adopters)</label><input id="f_email" type="email" /></div>
+          <div class="field"><label>Contact phone</label><input id="f_phone" /></div>
+        </div>
+        <div class="field">
+          <label>Photos</label>
+          <input id="f_photos" type="file" accept="image/*" multiple />
+          <div class="note">Upload one or more photos. The first photo is shown on the card.</div>
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button class="btn" id="saveBtn">Save dog</button>
+          <button class="btn ghost" id="cancelBtn" style="display:none">Cancel edit</button>
+        </div>
+      </div>
+
+      <h2>Current dogs</h2>
+      <div class="admin-list" id="adminList"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    let photoUrls = []; // urls for the dog currently being edited/created
+
+    function msg(el, text, kind) { el.innerHTML = text ? `<div class="msg ${kind}">${text}</div>` : ""; }
+    function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+    // ---------- Auth ----------
+    async function refreshAuth() {
+      const { data: { session } } = await sb.auth.getSession();
+      const authed = !!session && ADMIN_EMAILS.includes(session.user.email);
+      $("loginView").style.display = authed ? "none" : "block";
+      $("dashView").style.display = authed ? "block" : "none";
+      $("signout").style.display = authed ? "inline" : "none";
+      if (authed) loadDogs();
+    }
+
+    $("loginBtn").onclick = async () => {
+      msg($("loginMsg"), "", "");
+      const { error } = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
+      if (error) return msg($("loginMsg"), error.message, "err");
+      refreshAuth();
+    };
+    $("signupBtn").onclick = async () => {
+      msg($("loginMsg"), "", "");
+      const email = $("email").value.trim().toLowerCase();
+      if (!ADMIN_EMAILS.includes(email)) return msg($("loginMsg"), "That email isn't approved as an admin.", "err");
+      const { error } = await sb.auth.signUp({ email, password: $("password").value });
+      if (error) return msg($("loginMsg"), error.message, "err");
+      msg($("loginMsg"), "Account created — signing you in...", "ok");
+      const { error: e2 } = await sb.auth.signInWithPassword({ email, password: $("password").value });
+      if (e2) return msg($("loginMsg"), "Account made, but check your email to confirm before signing in.", "ok");
+      refreshAuth();
+    };
+    $("signout").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); refreshAuth(); };
+
+    // ---------- Photos ----------
+    function renderThumbs() {
+      $("thumbs").innerHTML = photoUrls.map((u, i) =>
+        `<div class="thumb" style="background-image:url('${esc(u)}')"><button onclick="removePhoto(${i})">×</button></div>`).join("");
+    }
+    window.removePhoto = i => { photoUrls.splice(i, 1); renderThumbs(); };
+
+    $("f_photos").onchange = async (e) => {
+      const files = [...e.target.files];
+      if (!files.length) return;
+      $("saveBtn").disabled = true; msg($("formMsg"), "Uploading photos...", "ok");
+      for (const file of files) {
+        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+        const { error } = await sb.storage.from("dog-photos").upload(path, file, { upsert: false });
+        if (error) { msg($("formMsg"), "Upload failed: " + error.message, "err"); break; }
+        const { data } = sb.storage.from("dog-photos").getPublicUrl(path);
+        photoUrls.push(data.publicUrl);
+      }
+      renderThumbs();
+      msg($("formMsg"), "", ""); $("saveBtn").disabled = false; e.target.value = "";
+    };
+
+    // ---------- Form ----------
+    function resetForm() {
+      $("dogId").value = ""; photoUrls = []; renderThumbs();
+      ["f_name","f_breed","f_age","f_desc","f_email","f_phone"].forEach(id => $(id).value = "");
+      $("f_status").value = "available"; $("f_sex").value = "unknown"; $("f_size").value = "unknown";
+      $("formTitle").textContent = "Add a dog"; $("cancelBtn").style.display = "none";
+    }
+    $("cancelBtn").onclick = resetForm;
+
+    $("saveBtn").onclick = async () => {
+      if (!$("f_name").value.trim()) return msg($("formMsg"), "Please enter a name.", "err");
+      const record = {
+        name: $("f_name").value.trim(), breed: $("f_breed").value.trim(), age: $("f_age").value.trim(),
+        sex: $("f_sex").value, size: $("f_size").value, description: $("f_desc").value.trim(),
+        status: $("f_status").value, photo_urls: photoUrls,
+        contact_email: $("f_email").value.trim(), contact_phone: $("f_phone").value.trim()
+      };
+      const id = $("dogId").value;
+      const { error } = id
+        ? await sb.from("dogs").update(record).eq("id", id)
+        : await sb.from("dogs").insert(record);
+      if (error) return msg($("formMsg"), error.message, "err");
+      msg($("formMsg"), id ? "Updated!" : "Dog added!", "ok");
+      resetForm(); loadDogs();
+      setTimeout(() => msg($("formMsg"), "", ""), 2500);
+    };
+
+    // ---------- List / edit / delete ----------
+    async function loadDogs() {
+      const { data, error } = await sb.from("dogs").select("*").order("created_at", { ascending: false });
+      if (error) return;
+      $("adminList").innerHTML = (data || []).map(d => `
+        <div class="admin-row">
+          <div class="ph" style="background-image:url('${esc((d.photo_urls||[])[0]||"")}')"></div>
+          <div class="info"><b>${esc(d.name)}</b><span>${esc(d.breed||"")} · ${esc(d.status)}</span></div>
+          <div class="acts">
+            <button class="btn ghost" onclick='editDog(${JSON.stringify(d.id)})'>Edit</button>
+            <button class="btn danger" onclick='delDog(${JSON.stringify(d.id)}, ${JSON.stringify(d.name)})'>Delete</button>
+          </div>
+        </div>`).join("") || '<p class="note">No dogs yet — add your first one above.</p>';
+      window._dogs = data || [];
+    }
+    window.editDog = id => {
+      const d = (window._dogs||[]).find(x => x.id === id); if (!d) return;
+      $("dogId").value = d.id; $("f_name").value = d.name||""; $("f_breed").value = d.breed||"";
+      $("f_age").value = d.age||""; $("f_desc").value = d.description||""; $("f_email").value = d.contact_email||"";
+      $("f_phone").value = d.contact_phone||""; $("f_status").value = d.status; $("f_sex").value = d.sex; $("f_size").value = d.size;
+      photoUrls = [...(d.photo_urls||[])]; renderThumbs();
+      $("formTitle").textContent = "Edit " + d.name; $("cancelBtn").style.display = "inline-block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.delDog = async (id, name) => {
+      if (!confirm("Delete " + name + "? This cannot be undone.")) return;
+      const { error } = await sb.from("dogs").delete().eq("id", id);
+      if (error) return alert(error.message);
+      loadDogs();
+    };
+
+    sb.auth.onAuthStateChange(() => refreshAuth());
+    refreshAuth();
+  </script>
+</body>
+</html>

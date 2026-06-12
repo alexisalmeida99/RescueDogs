@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Chance Dogs — Adopt a Rescue</title>
+  <meta name="description" content="Meet rescued dogs looking for a loving forever home. Browse our dogs and reach out to adopt." />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <div class="logo">Second Chance Dogs</div>
+      <nav>
+        <a href="index.html">Adopt</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="mvc-eyebrow">Rescued &middot; Loved &middot; Looking for home</span>
+      <h1>Every dog deserves <span class="accent-italic">a second chance</span></h1>
+      <p class="lead">These rescues are ready for a loving home. Browse below and reach out about anyone who steals your heart.</p>
+      <div class="rule"><span>Meet them</span></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="filters" id="filters">
+      <button data-f="all" class="active">All</button>
+      <button data-f="available">Available</button>
+      <button data-f="pending">Pending</button>
+      <button data-f="adopted">Adopted</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">No dogs to show right now — please check back soon.</div>
+  </div>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="rule"><span>Second Chance Dogs</span></div>
+      Helping rescues find forever homes.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script>
+    let allDogs = [];
+    let filter = "all";
+
+    function esc(s) { return (s || "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+    function metaLine(d) {
+      const bits = [d.breed, d.age, d.sex !== "unknown" ? d.sex : null, d.size !== "unknown" ? d.size : null]
+        .filter(Boolean);
+      return bits.join(" · ");
+    }
+
+    function render() {
+      const grid = document.getElementById("grid");
+      const dogs = filter === "all" ? allDogs : allDogs.filter(d => d.status === filter);
+      document.getElementById("empty").style.display = dogs.length ? "none" : "block";
+      grid.innerHTML = dogs.map(d => {
+        const photo = (d.photo_urls && d.photo_urls[0]) || "";
+        const contact = d.contact_email
+          ? `mailto:${esc(d.contact_email)}?subject=${encodeURIComponent("Adopting " + d.name)}`
+          : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : "#");
+        const label = d.status === "adopted" ? "Adopted" : "Ask about " + esc(d.name);
+        return `
+          <div class="card">
+            <div class="photo" style="background-image:url('${esc(photo)}')">
+              <span class="badge ${d.status}">${d.status}</span>
+            </div>
+            <div class="body">
+              <h3>${esc(d.name)}</h3>
+              <div class="meta">${esc(metaLine(d))}</div>
+              <div class="desc">${esc(d.description)}</div>
+              ${d.status !== "adopted" ? `<a class="btn adopt" href="${contact}">${label}</a>` : ""}
+            </div>
+          </div>`;
+      }).join("");
+    }
+
+    document.getElementById("filters").addEventListener("click", e => {
+      if (e.target.tagName !== "BUTTON") return;
+      filter = e.target.dataset.f;
+      [...document.querySelectorAll("#filters button")].forEach(b => b.classList.toggle("active", b === e.target));
+      render();
+    });
+
+    async function load() {
+      const { data, error } = await sb.from("dogs").select("*").order("created_at", { ascending: false });
+      if (error) { console.error(error); document.getElementById("empty").style.display = "block"; return; }
+      allDogs = data || [];
+      render();
+    }
+    load();
+  </script>
+</body>
+</html>
