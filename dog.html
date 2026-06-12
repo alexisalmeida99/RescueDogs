@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet our rescue — Piper’s Pals Rescue</title>
+  <meta name="description" content="Meet one of our rescue dogs looking for a forever home." />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="wordmark">Piper’s Pals Rescue</a>
+      <div class="wordmark-divider"></div>
+      <nav>
+        <a href="index.html#dogs">Adopt</a>
+        <a href="index.html#adopt">How it works</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap profile" id="profile">
+    <p class="loading">Loading…</p>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="rule"><span>Piper’s Pals Rescue</span></div>
+      Helping rescues find forever homes.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script>
+    function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+    function metaLine(d){
+      return [d.breed, d.age, d.sex!=="unknown"?d.sex:null, d.size!=="unknown"?d.size:null].filter(Boolean).join(" · ");
+    }
+
+    async function load(){
+      const id = new URLSearchParams(location.search).get("id");
+      const wrap = document.getElementById("profile");
+      if (!id) { wrap.innerHTML = notFound(); return; }
+      const { data: d, error } = await sb.from("dogs").select("*").eq("id", id).single();
+      if (error || !d) { wrap.innerHTML = notFound(); return; }
+
+      document.title = `${d.name} — Piper’s Pals Rescue`;
+      const photos = (d.photo_urls && d.photo_urls.length) ? d.photo_urls : [];
+      const hero = photos[0] || "";
+      const contact = d.contact_email
+        ? `mailto:${esc(d.contact_email)}?subject=${encodeURIComponent("Adopting " + d.name)}`
+        : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : "index.html#adopt");
+
+      wrap.innerHTML = `
+        <a class="back" href="index.html#dogs"><i class="ph-light ph-arrow-left"></i> All dogs</a>
+        <div class="profile-grid">
+          <div>
+            <div class="profile-photo" style="background-image:url('${esc(hero)}')">
+              <span class="badge ${d.status}">${esc(d.status)}</span>
+            </div>
+            ${photos.length > 1 ? `<div class="profile-thumbs">${photos.map((p,i)=>
+              `<div class="pthumb${i===0?' active':''}" data-src="${esc(p)}" style="background-image:url('${esc(p)}')"></div>`).join("")}</div>` : ""}
+          </div>
+          <div class="profile-info">
+            <span class="mvc-eyebrow">Looking for home</span>
+            <h1>${esc(d.name)}</h1>
+            <div class="profile-meta">${esc(metaLine(d)) || "Rescue dog"}</div>
+            <p class="profile-desc">${esc(d.description) || "More about this sweet dog coming soon."}</p>
+            ${d.status !== "adopted"
+              ? `<a class="btn accent" href="${contact}">Ask about ${esc(d.name)}</a>`
+              : `<div class="adopted-note">${esc(d.name)} has found a forever home. 🎉</div>`}
+          </div>
+        </div>`;
+
+      // thumbnail switching
+      wrap.querySelectorAll(".pthumb").forEach(t => t.addEventListener("click", () => {
+        wrap.querySelector(".profile-photo").style.backgroundImage = `url('${t.dataset.src}')`;
+        wrap.querySelectorAll(".pthumb").forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+      }));
+    }
+
+    function notFound(){
+      return `<div class="empty">We couldn’t find that dog. <a href="index.html#dogs">Back to all dogs</a></div>`;
+    }
+    load();
+  </script>
+</body>
+</html>

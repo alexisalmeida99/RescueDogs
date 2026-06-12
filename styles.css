@@ -96,7 +96,9 @@ header.site nav a:hover { color: var(--accent-deep); }
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.card .photo { aspect-ratio: 4/3; background: var(--bg-sunken) center/cover no-repeat; position: relative; }
+.card .photo { display: block; aspect-ratio: 4/3; background: var(--bg-sunken) center/cover no-repeat; position: relative; }
+.card h3 .name-link { color: inherit; text-decoration: none; }
+.card h3 .name-link:hover { color: var(--accent-deep); }
 .card .badge {
   position: absolute; top: var(--sp-3); left: var(--sp-3); padding: var(--sp-1) var(--sp-3);
   border-radius: var(--r-pill); font-family: var(--font-ui); font-size: var(--t-eyebrow);
@@ -188,6 +190,27 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 .admin-row .info span { color: var(--fg-3); font-size: var(--t-small); }
 .admin-row .acts { display: flex; gap: var(--sp-2); }
 .center-narrow { max-width: 440px; margin: var(--sp-9) auto; }
+
+/* ---------- Dog profile page ---------- */
+.profile { padding-top: var(--sp-7); padding-bottom: var(--sp-9); }
+.profile .loading { color: var(--fg-3); text-align: center; padding: var(--sp-9) 0; }
+.profile .back { display: inline-flex; align-items: center; gap: var(--sp-2); font-family: var(--font-ui); font-size: var(--t-small); font-weight: 600; text-decoration: none; color: var(--accent-deep); margin-bottom: var(--sp-6); }
+.profile .back:hover { color: var(--accent); }
+.profile-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--sp-8); align-items: start; }
+.profile-photo { aspect-ratio: 4/3; background: var(--bg-sunken) center/cover no-repeat; border-radius: var(--r-lg); box-shadow: var(--shadow-md); position: relative; }
+.profile-photo .badge { position: absolute; top: var(--sp-4); left: var(--sp-4); }
+.profile-thumbs { display: flex; gap: var(--sp-3); margin-top: var(--sp-3); flex-wrap: wrap; }
+.pthumb { width: 84px; height: 84px; border-radius: var(--r-sm); background: var(--bg-sunken) center/cover; cursor: pointer; border: 2px solid transparent; transition: border-color .2s; }
+.pthumb:hover { border-color: var(--line-2); }
+.pthumb.active { border-color: var(--accent); }
+.profile-info { padding-top: var(--sp-3); }
+.profile-info .mvc-eyebrow { display: block; margin-bottom: var(--sp-3); }
+.profile-info h1 { font-family: var(--font-display); font-weight: 500; font-size: var(--t-h1); margin: 0 0 var(--sp-2); }
+.profile-meta { font-family: var(--font-ui); color: var(--fg-3); font-size: var(--t-body); margin-bottom: var(--sp-5); }
+.profile-desc { font-size: var(--t-lead); line-height: 1.7; color: var(--fg-2); margin-bottom: var(--sp-6); white-space: pre-line; }
+.adopted-note { font-family: var(--font-accent); font-style: italic; font-size: var(--t-lead); color: var(--accent-terra-deep); }
+
+@media (max-width: 720px) { .profile-grid { grid-template-columns: 1fr; gap: var(--sp-6); } }
 
 @media (max-width: 720px) {
   .row2 { grid-template-columns: 1fr; }

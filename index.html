@@ -115,13 +115,14 @@
           ? `mailto:${esc(d.contact_email)}?subject=${encodeURIComponent("Adopting " + d.name)}`
           : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : "#");
         const label = d.status === "adopted" ? "Adopted" : "Ask about " + esc(d.name);
+        const profile = `dog.html?id=${encodeURIComponent(d.id)}`;
         return `
           <div class="card">
-            <div class="photo" style="background-image:url('${esc(photo)}')">
+            <a class="photo" href="${profile}" style="background-image:url('${esc(photo)}')">
               <span class="badge ${d.status}">${d.status}</span>
-            </div>
+            </a>
             <div class="body">
-              <h3>${esc(d.name)}</h3>
+              <h3><a class="name-link" href="${profile}">${esc(d.name)}</a></h3>
               <div class="meta">${esc(metaLine(d))}</div>
               <div class="desc">${esc(d.description)}</div>
               ${d.status !== "adopted" ? `<a class="btn adopt" href="${contact}">${label}</a>` : ""}
