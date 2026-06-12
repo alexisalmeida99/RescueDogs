@@ -135,6 +135,9 @@ header.site nav a:hover { color: var(--accent-deep); }
 
 footer.site { text-align: center; color: var(--fg-3); font-size: var(--t-small); padding: var(--sp-7) var(--sp-5); border-top: 1px solid var(--line-1); }
 footer.site .rule { margin-bottom: var(--sp-4); }
+.footer-admin { margin-top: var(--sp-5); }
+.footer-admin a { font-family: var(--font-ui); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-300); text-decoration: none; opacity: .65; transition: opacity .2s, color .2s; }
+.footer-admin a:hover { opacity: 1; color: var(--accent-deep); }
 
 /* ---------- Buttons (pills) ---------- */
 .btn {
