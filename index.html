@@ -6,38 +6,83 @@
   <title>Second Chance Dogs — Adopt a Rescue</title>
   <meta name="description" content="Meet rescued dogs looking for a loving forever home. Browse our dogs and reach out to adopt." />
   <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site">
     <div class="wrap">
-      <div class="logo">Second Chance Dogs</div>
+      <a href="index.html" class="wordmark">Second Chance Dogs</a>
+      <div class="wordmark-divider"></div>
       <nav>
-        <a href="index.html">Adopt</a>
+        <a href="#dogs">Adopt</a>
+        <a href="#adopt">How it works</a>
         <a href="admin.html">Admin</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="wrap">
+    <div class="inner">
       <span class="mvc-eyebrow">Rescued &middot; Loved &middot; Looking for home</span>
-      <h1>Every dog deserves <span class="accent-italic">a second chance</span></h1>
-      <p class="lead">These rescues are ready for a loving home. Browse below and reach out about anyone who steals your heart.</p>
-      <div class="rule"><span>Meet them</span></div>
+      <h1>Every dog deserves<br /><span class="accent-italic">a second chance</span></h1>
+      <p class="lead">These rescues are ready for a loving home — gentle, vetted and waiting for someone like you.</p>
+      <div class="cta-row">
+        <a class="btn light" href="#dogs">Meet the dogs</a>
+        <a class="btn ghost-light" href="#adopt">How adoption works</a>
+      </div>
     </div>
   </section>
 
-  <div class="wrap">
-    <div class="filters" id="filters">
-      <button data-f="all" class="active">All</button>
-      <button data-f="available">Available</button>
-      <button data-f="pending">Pending</button>
-      <button data-f="adopted">Adopted</button>
+  <!-- Trust strip -->
+  <div class="trust">
+    <div class="wrap">
+      <div class="item"><i class="ph-light ph-syringe"></i> Vaccinated</div>
+      <div class="item"><i class="ph-light ph-heart"></i> Spayed &amp; neutered</div>
+      <div class="item"><i class="ph-light ph-stethoscope"></i> Vet-checked</div>
+      <div class="item"><i class="ph-light ph-house-line"></i> Foster-loved</div>
     </div>
-    <div class="grid" id="grid"></div>
-    <div class="empty" id="empty" style="display:none">No dogs to show right now — please check back soon.</div>
   </div>
+
+  <!-- Gallery -->
+  <section class="section" id="dogs">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="mvc-eyebrow">Looking for home</span>
+        <h2>Meet our rescues</h2>
+        <p class="lead">Every dog here has a story and a second chance ahead. Reach out about anyone who steals your heart.</p>
+      </div>
+      <div class="filters" id="filters">
+        <button data-f="all" class="active">All</button>
+        <button data-f="available">Available</button>
+        <button data-f="pending">Pending</button>
+        <button data-f="adopted">Adopted</button>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" style="display:none">No dogs to show right now — please check back soon.</div>
+    </div>
+  </section>
+
+  <!-- Happy tails -->
+  <section class="band-dark">
+    <div class="wrap">
+      <div class="rule light"><span>Happy tails</span></div>
+      <blockquote>&ldquo;We came to look. We left with Biscuit — and our home hasn't felt the same calm and joy without a rescue in it.&rdquo;</blockquote>
+      <div class="attr">The Alvarez family &middot; adopted 2025</div>
+    </div>
+  </section>
+
+  <!-- How adoption works / CTA -->
+  <section class="cta" id="adopt">
+    <div class="wrap">
+      <div class="box">
+        <span class="mvc-eyebrow">How adoption works</span>
+        <h2>Found a dog you love?</h2>
+        <p class="lead">Reach out about any dog above and we&rsquo;ll set up a meet, talk through their needs, and help you find the right fit — never a rushed decision.</p>
+        <a class="btn accent" href="mailto:yvette@yalmeida.com?subject=Adoption%20enquiry">Start an adoption enquiry</a>
+      </div>
+    </div>
+  </section>
 
   <footer class="site">
     <div class="wrap">
