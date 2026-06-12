@@ -98,6 +98,8 @@
     let filter = "all";
 
     function esc(s) { return (s || "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+    // Escape first, then render simple markdown: **bold** and *italic*
+    function fmt(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/(^|[^*])\*(?!\s)([^*]+?)\*/g, "$1<em>$2</em>"); }
 
     function metaLine(d) {
       const bits = [d.breed, d.age, d.sex !== "unknown" ? d.sex : null, d.size !== "unknown" ? d.size : null]
@@ -124,7 +126,7 @@
             <div class="body">
               <h3><a class="name-link" href="${profile}">${esc(d.name)}</a></h3>
               <div class="meta">${esc(metaLine(d))}</div>
-              <div class="desc">${esc(d.description)}</div>
+              <div class="desc">${fmt(d.description)}</div>
               ${d.status !== "adopted" ? `<a class="btn adopt" href="${contact}">${label}</a>` : ""}
             </div>
           </div>`;
