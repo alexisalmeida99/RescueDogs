@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Piper’s Pals Pet Rescue</title>
-  <link rel="stylesheet" href="colors_and_type.css?v=5" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="colors_and_type.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <header class="site">
@@ -33,8 +33,7 @@
         <input id="password" type="password" placeholder="Your password" />
       </div>
       <button class="btn" id="loginBtn" style="width:100%">Sign in</button>
-      <p class="note">First time? Enter your admin email above and click below to create your account. Only approved emails can edit the site.</p>
-      <button class="btn ghost" id="signupBtn" style="width:100%;margin-top:8px">Create account</button>
+      <p class="note">Staff only. Accounts are created by the rescue — if you need access, contact the site owner.</p>
     </div>
 
     <!-- DASHBOARD -->
@@ -94,7 +93,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=5"></script>
+  <script src="config.js?v=6"></script>
   <script>
     const $ = id => document.getElementById(id);
     let photoUrls = []; // urls for the dog currently being edited/created
@@ -116,17 +115,6 @@
       msg($("loginMsg"), "", "");
       const { error } = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
       if (error) return msg($("loginMsg"), error.message, "err");
-      refreshAuth();
-    };
-    $("signupBtn").onclick = async () => {
-      msg($("loginMsg"), "", "");
-      const email = $("email").value.trim().toLowerCase();
-      if (!ADMIN_EMAILS.includes(email)) return msg($("loginMsg"), "That email isn't approved as an admin.", "err");
-      const { error } = await sb.auth.signUp({ email, password: $("password").value });
-      if (error) return msg($("loginMsg"), error.message, "err");
-      msg($("loginMsg"), "Account created — signing you in...", "ok");
-      const { error: e2 } = await sb.auth.signInWithPassword({ email, password: $("password").value });
-      if (e2) return msg($("loginMsg"), "Account made, but check your email to confirm before signing in.", "ok");
       refreshAuth();
     };
     $("signout").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); refreshAuth(); };
