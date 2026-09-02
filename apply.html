@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adoption Application — Piper’s Pals Pet Rescue</title>
+  <meta name="description" content="Apply to adopt a rescue dog from Piper’s Pals Pet Rescue in Key Biscayne, Florida." />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a href="index.html" class="wordmark">Piper’s Pals Pet Rescue</a>
+      <div class="wordmark-divider"></div>
+      <nav>
+        <a href="index.html#dogs" data-i18n="nav.adopt">Adopt</a>
+        <a href="index.html#adopt" data-i18n="nav.how">How it works</a>
+        <span class="lang-toggle">
+          <button data-lang="en">EN</button>
+          <button data-lang="es">ES</button>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap apply">
+    <a class="back" href="index.html#dogs"><i class="ph-light ph-arrow-left"></i> <span data-i18n="profile.back">All dogs</span></a>
+    <div class="section-head" style="text-align:left;max-width:none">
+      <span class="mvc-eyebrow" data-i18n="apply.eyebrow">Adoption application</span>
+      <h1 id="applyTitle" data-i18n="apply.title">Adoption application</h1>
+      <p class="lead" data-i18n="apply.intro">Our goal is to place each dog in a safe, stable, loving and permanent home. Submitting an application doesn’t guarantee adoption; information may be verified before approval.</p>
+    </div>
+
+    <form id="applyForm" class="panel" novalidate>
+      <div id="formMsg"></div>
+
+      <h3 data-i18n="apply.s1">1. Applicant information</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.fullname">Full legal name *</label><input name="full_name" required /></div>
+        <div class="field"><label data-i18n="f.dob">Date of birth</label><input name="dob" /></div>
+      </div>
+      <div class="field"><label data-i18n="f.address">Home address</label><input name="address" /></div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.citystate">City / State / ZIP</label><input name="city_state_zip" /></div>
+        <div class="field"><label data-i18n="f.phone">Phone *</label><input name="phone" required /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.email">Email *</label><input name="email" type="email" required /></div>
+        <div class="field"><label data-i18n="f.occupation">Occupation</label><input name="occupation" /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.employer">Employer</label><input name="employer" /></div>
+        <div class="field"><label data-i18n="f.howlong">How long at current address?</label><input name="how_long_address" /></div>
+      </div>
+
+      <h3 data-i18n="apply.s2">2. Household</h3>
+      <div class="field"><label data-i18n="f.household">Everyone living in the household (name, age, relationship)</label><textarea name="household"></textarea></div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.adultsagree">Are all adults aware of and in agreement with this adoption?</label>
+          <select name="adults_agree"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+        <div class="field"><label data-i18n="f.children">Children in the home? If yes, ages</label><input name="children" /></div>
+      </div>
+      <div class="field"><label data-i18n="f.allergies">Any dog allergies in the household? Explain</label><input name="allergies" /></div>
+
+      <h3 data-i18n="apply.s3">3. Home &amp; environment</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.residence">Residence status</label>
+          <select name="residence_status"><option value=""></option><option data-i18n="opt.own">Own</option><option data-i18n="opt.rent">Rent</option><option data-i18n="opt.other">Other</option></select></div>
+        <div class="field"><label data-i18n="f.restype">Type of residence</label>
+          <select name="residence_type"><option value=""></option><option data-i18n="opt.house">House</option><option data-i18n="opt.townhouse">Townhouse</option><option data-i18n="opt.condo">Condo</option><option data-i18n="opt.apartment">Apartment</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.landlord">If applicable, landlord/association contact</label><input name="landlord" /></div>
+        <div class="field"><label data-i18n="f.dogspermitted">Are dogs/French Bulldogs permitted?</label><input name="dogs_permitted" /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.ac">Is your home air-conditioned?</label>
+          <select name="air_conditioned"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+        <div class="field"><label data-i18n="f.exercise">How will you provide daily bathroom breaks and exercise?</label><input name="exercise_plan" /></div>
+      </div>
+      <div class="field"><label data-i18n="f.outdoor">Describe the safe outdoor/walking area you will use</label><textarea name="outdoor_area"></textarea></div>
+
+      <h3 data-i18n="apply.s4">4. Current &amp; previous pets</h3>
+      <div class="field"><label data-i18n="f.haspets">Do you currently have pets? List name, breed, age, sex, spayed/neutered status</label><textarea name="current_pets"></textarea></div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.uptodate">Are current pets up to date on routine veterinary care?</label>
+          <select name="pets_vet_current"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+        <div class="field"><label data-i18n="f.surrendered">Ever surrendered, returned, rehomed or given away a pet? Explain</label><input name="surrendered" /></div>
+      </div>
+      <div class="field"><label data-i18n="f.past10">Pets owned during the past 10 years and what happened to them</label><textarea name="past_pets"></textarea></div>
+      <div class="field"><label data-i18n="f.denied">Ever been denied an adoption by a rescue or shelter? If yes, explain</label><input name="denied_before" /></div>
+
+      <h3 data-i18n="apply.s5">5. Breed experience</h3>
+      <div class="field"><label data-i18n="f.ownedfrenchie">Have you owned this breed before? If yes, describe your experience</label><textarea name="breed_experience"></textarea></div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.brachy">Have you owned another brachycephalic (short-nosed) breed?</label>
+          <select name="brachy"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+        <div class="field"><label data-i18n="f.riskaware">Comfortable managing breed-related health risks and seeking vet care when needed?</label>
+          <select name="risk_aware"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+      </div>
+      <div class="field"><label data-i18n="f.hotweather">How would you manage walks, exercise and outdoor time during hot weather?</label><textarea name="hot_weather"></textarea></div>
+
+      <h3 data-i18n="apply.s6">6. Veterinary reference</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.vetclinic">Veterinary clinic</label><input name="vet_clinic" /></div>
+        <div class="field"><label data-i18n="f.vetname">Veterinarian</label><input name="vet_name" /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.vetphone">Clinic phone</label><input name="vet_phone" /></div>
+        <div class="field"><label data-i18n="f.vetemail">Clinic email</label><input name="vet_email" /></div>
+      </div>
+
+      <h3 data-i18n="apply.s7">7. Personal references</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.ref1">Reference 1 — name &amp; phone</label><input name="ref1" /></div>
+        <div class="field"><label data-i18n="f.ref2">Reference 2 — name &amp; phone</label><input name="ref2" /></div>
+      </div>
+
+      <h3 data-i18n="apply.s8">8. About the dog</h3>
+      <div class="field"><label data-i18n="f.dogname">Which dog are you interested in?</label><input name="dog_name" id="dogName" /></div>
+      <div class="field"><label data-i18n="f.whydog">Why are you interested in adopting this particular dog?</label><textarea name="why_dog"></textarea></div>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.primarycare">Who will primarily care for the dog?</label><input name="primary_carer" /></div>
+        <div class="field"><label data-i18n="f.gift">Is this dog intended as a gift for another person?</label>
+          <select name="is_gift"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+      </div>
+
+      <h3 data-i18n="apply.s9">9. Daily life</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.hoursalone">Hours per day the dog will normally be left alone</label><input name="hours_alone" /></div>
+        <div class="field"><label data-i18n="f.sleep">Where will the dog sleep at night?</label><input name="sleep_location" /></div>
+      </div>
+      <div class="field"><label data-i18n="f.whenaway">Where will the dog stay when no one is home?</label><input name="when_away" /></div>
+      <div class="field"><label data-i18n="f.travelcare">Who will care for the dog when you travel?</label><input name="travel_care" /></div>
+
+      <h3 data-i18n="apply.s10">10. Long-term commitment</h3>
+      <div class="row2">
+        <div class="field"><label data-i18n="f.financial">Financially prepared for routine and potentially significant breed-related vet expenses?</label>
+          <select name="financially_prepared"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+        <div class="field"><label data-i18n="f.lifetime">Prepared to care for this dog throughout its lifetime?</label>
+          <select name="lifetime"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+      </div>
+      <div class="field"><label data-i18n="f.ifmoved">What would happen to the dog if you moved or your work schedule changed?</label><textarea name="if_moved"></textarea></div>
+      <div class="field"><label data-i18n="f.contactfirst">If you could no longer care for the dog, would you contact us before rehoming?</label>
+        <select name="contact_first"><option value=""></option><option data-i18n="opt.yes">Yes</option><option data-i18n="opt.no">No</option></select></div>
+
+      <h3 data-i18n="apply.s11">11. Verification &amp; acknowledgment</h3>
+      <div class="field" style="display:flex;gap:10px;align-items:flex-start">
+        <input type="checkbox" name="agree" id="agree" required style="width:auto;margin-top:5px" />
+        <label for="agree" style="font-weight:400" data-i18n="f.agree">I certify the information provided is true and complete, I authorize verification of it, and I understand that submitting this application does not guarantee adoption.</label>
+      </div>
+      <div class="field"><label data-i18n="f.signature">Typed signature (your full name) *</label><input name="signature" required /></div>
+
+      <button class="btn accent" type="submit" id="submitBtn" data-i18n="apply.submit">Submit application</button>
+      <p class="note" data-i18n="apply.privacy">Your information is sent securely to Piper’s Pals Pet Rescue and used only to evaluate your application.</p>
+    </form>
+
+    <div id="successBox" class="panel" style="display:none;text-align:center">
+      <h2 data-i18n="apply.thanksTitle">Thank you — application received</h2>
+      <p class="lead" data-i18n="apply.thanksBody">We’ve received your application and will be in touch soon. Thank you for choosing to adopt.</p>
+      <a class="btn" href="index.html#dogs" data-i18n="apply.backHome">Back to the dogs</a>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div class="rule"><span>Piper’s Pals Pet Rescue</span></div>
+      <span data-i18n="footer.tagline">Helping rescues find forever homes.</span>
+      <p class="contact-line"><i class="ph-light ph-map-pin"></i> <span data-i18n="footer.location">Located in Key Biscayne, Florida</span></p>
+      <p class="contact-line" id="footerContact"></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    // Pre-fill the dog name from ?dog=
+    const dogParam = new URLSearchParams(location.search).get("dog");
+    if (dogParam) $("dogName").value = dogParam;
+
+    function renderContact() {
+      const el = $("footerContact");
+      if (el) el.innerHTML = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a> &middot; <a href="tel:${DEFAULT_CONTACT_PHONE}">${DEFAULT_CONTACT_PHONE_DISPLAY}</a>`;
+    }
+
+    $("applyForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      $("submitBtn").disabled = true;
+      $("formMsg").innerHTML = `<div class="msg ok">${t("apply.sending")}</div>`;
+
+      const fd = new FormData(form);
+      const answers = {};
+      fd.forEach((v, k) => { if (k !== "agree") answers[k] = v; });
+
+      const record = {
+        dog_name: answers.dog_name || null,
+        applicant_name: answers.full_name || null,
+        applicant_email: answers.email || null,
+        applicant_phone: answers.phone || null,
+        answers
+      };
+
+      // 1) Save to the database
+      const { error } = await sb.from("applications").insert(record);
+      if (error) {
+        $("submitBtn").disabled = false;
+        $("formMsg").innerHTML = `<div class="msg err">${t("apply.error")}</div>`;
+        console.error(error);
+        return;
+      }
+
+      // 2) Optional email copy via Web3Forms (if a key is configured)
+      if (typeof WEB3FORMS_KEY !== "undefined" && WEB3FORMS_KEY) {
+        try {
+          await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_KEY,
+              subject: `New adoption application${record.dog_name ? " — " + record.dog_name : ""}`,
+              from_name: "Piper's Pals website",
+              ...answers
+            })
+          });
+        } catch (_) { /* email is best-effort; DB save already succeeded */ }
+      }
+
+      form.style.display = "none";
+      $("successBox").style.display = "block";
+      $("successBox").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.querySelector(".lang-toggle").addEventListener("click", e => {
+      const btn = e.target.closest("button"); if (!btn) return;
+      setLang(btn.dataset.lang);
+    });
+    applyStaticI18n();
+    renderContact();
+  </script>
+</body>
+</html>

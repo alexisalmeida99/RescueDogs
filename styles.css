@@ -223,6 +223,21 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 
 @media (max-width: 720px) { .profile-grid { grid-template-columns: 1fr; gap: var(--sp-6); } }
 
+/* ---------- Quiet PDF fallback note ---------- */
+.pdf-note { font-family: var(--font-ui); font-size: var(--t-small); color: var(--fg-3); margin: var(--sp-4) 0 0; }
+.pdf-note a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 2px; }
+.pdf-note a:hover { color: var(--accent-deep); }
+
+/* ---------- Application form page ---------- */
+.apply { padding-top: var(--sp-6); padding-bottom: var(--sp-9); max-width: 860px; }
+.apply .back { display: inline-flex; align-items: center; gap: var(--sp-2); font-family: var(--font-ui); font-size: var(--t-small); font-weight: 600; text-decoration: none; color: var(--accent-deep); margin-bottom: var(--sp-5); }
+.apply .back:hover { color: var(--accent); }
+.apply h1 { font-family: var(--font-display); font-weight: 500; font-size: var(--t-h1); margin: var(--sp-2) 0 0; }
+.apply form h3 { margin: var(--sp-7) 0 var(--sp-4); padding-bottom: var(--sp-2); border-bottom: 1px solid var(--line-1); }
+.apply form h3:first-of-type { margin-top: 0; }
+#successBox h2 { margin-top: 0; }
+#submitBtn { margin-top: var(--sp-4); }
+
 @media (max-width: 720px) {
   .row2 { grid-template-columns: 1fr; }
   .wrap { padding: 0 var(--sp-5); }

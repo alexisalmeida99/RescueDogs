@@ -84,6 +84,9 @@
 
       <h2>Current dogs</h2>
       <div class="admin-list" id="adminList"></div>
+
+      <h2 style="margin-top:var(--sp-8)">Adoption applications</h2>
+      <div class="admin-list" id="appsList"></div>
     </div>
   </div>
 
@@ -103,7 +106,7 @@
       $("loginView").style.display = authed ? "none" : "block";
       $("dashView").style.display = authed ? "block" : "none";
       $("signout").style.display = authed ? "inline" : "none";
-      if (authed) loadDogs();
+      if (authed) { loadDogs(); loadApps(); }
     }
 
     $("loginBtn").onclick = async () => {
@@ -204,6 +207,59 @@
       const { error } = await sb.from("dogs").delete().eq("id", id);
       if (error) return alert(error.message);
       loadDogs();
+    };
+
+    // ---------- Applications ----------
+    const APP_LABELS = {
+      full_name:"Full name", dob:"Date of birth", address:"Address", city_state_zip:"City/State/ZIP",
+      phone:"Phone", email:"Email", occupation:"Occupation", employer:"Employer", how_long_address:"Time at address",
+      household:"Household", adults_agree:"Adults agree", children:"Children", allergies:"Allergies",
+      residence_status:"Residence status", residence_type:"Residence type", landlord:"Landlord/assoc.", dogs_permitted:"Dogs permitted",
+      air_conditioned:"Air conditioned", exercise_plan:"Exercise plan", outdoor_area:"Outdoor area",
+      current_pets:"Current pets", pets_vet_current:"Pets vet current", surrendered:"Ever surrendered", past_pets:"Past pets", denied_before:"Denied before",
+      breed_experience:"Breed experience", brachy:"Owned brachy breed", risk_aware:"Risk aware", hot_weather:"Hot weather plan",
+      vet_clinic:"Vet clinic", vet_name:"Veterinarian", vet_phone:"Vet phone", vet_email:"Vet email",
+      ref1:"Reference 1", ref2:"Reference 2",
+      dog_name:"Dog", why_dog:"Why this dog", primary_carer:"Primary carer", is_gift:"Is a gift",
+      hours_alone:"Hours alone/day", sleep_location:"Sleeps at night", when_away:"When no one home", travel_care:"Travel care",
+      financially_prepared:"Financially prepared", lifetime:"Lifetime commitment", if_moved:"If moved", contact_first:"Contact us first",
+      signature:"Signature"
+    };
+    async function loadApps() {
+      const { data, error } = await sb.from("applications").select("*").order("created_at", { ascending: false });
+      if (error) { $("appsList").innerHTML = `<p class="note">${esc(error.message)}</p>`; return; }
+      window._apps = data || [];
+      $("appsList").innerHTML = (data || []).map(a => {
+        const when = (a.created_at || "").slice(0, 10);
+        return `<div class="admin-row" style="flex-wrap:wrap">
+          <div class="info">
+            <b>${esc(a.applicant_name || "—")}${a.dog_name ? " · " + esc(a.dog_name) : ""}</b>
+            <span>${esc(a.applicant_email || "")} ${a.applicant_phone ? "· " + esc(a.applicant_phone) : ""} · ${esc(when)}</span>
+          </div>
+          <div class="acts">
+            <button class="btn ghost" onclick='toggleApp(${JSON.stringify(a.id)})'>View</button>
+            <button class="btn danger" onclick='delApp(${JSON.stringify(a.id)})'>Delete</button>
+          </div>
+          <div class="app-detail" id="app-${a.id}" style="display:none;flex-basis:100%;margin-top:10px"></div>
+        </div>`;
+      }).join("") || '<p class="note">No applications yet.</p>';
+    }
+    window.toggleApp = id => {
+      const box = document.getElementById("app-" + id);
+      if (box.style.display === "block") { box.style.display = "none"; return; }
+      const a = (window._apps || []).find(x => x.id === id); if (!a) return;
+      const ans = a.answers || {};
+      box.innerHTML = Object.keys(APP_LABELS)
+        .filter(k => ans[k] != null && String(ans[k]).trim() !== "")
+        .map(k => `<div style="padding:6px 0;border-top:1px solid var(--line-1)"><b style="font-family:var(--font-ui);font-size:13px">${APP_LABELS[k]}:</b> ${esc(String(ans[k]))}</div>`)
+        .join("") || '<p class="note">No details.</p>';
+      box.style.display = "block";
+    };
+    window.delApp = async id => {
+      if (!confirm("Delete this application? This cannot be undone.")) return;
+      const { error } = await sb.from("applications").delete().eq("id", id);
+      if (error) return alert(error.message);
+      loadApps();
     };
 
     sb.auth.onAuthStateChange(() => refreshAuth());

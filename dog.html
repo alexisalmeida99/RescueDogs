@@ -85,9 +85,10 @@
             <p class="profile-desc">${d.description ? fmt(d.description) : t("profile.nodesc")}</p>
             ${d.status !== "adopted"
               ? `<div class="cta-row">
-                   <a class="btn accent" href="${contact}">${t("profile.ask", { name: esc(d.name) })}</a>
-                   <a class="btn secondary" href="adoption-application.pdf" download><i class="ph-light ph-download-simple"></i> ${t("profile.download")}</a>
-                 </div>`
+                   <a class="btn accent" href="apply.html?dog=${encodeURIComponent(d.name)}">${t("profile.apply", { name: esc(d.name) })}</a>
+                   <a class="btn secondary" href="${contact}">${t("profile.ask", { name: esc(d.name) })}</a>
+                 </div>
+                 <p class="pdf-note">${t("cta.pdfpre")} <a href="adoption-application.pdf" download>${t("cta.pdflink")}</a> ${t("cta.pdfpost")}</p>`
               : `<div class="adopted-note">${t("profile.adopted", { name: esc(d.name) })}</div>`}
           </div>
         </div>`;
