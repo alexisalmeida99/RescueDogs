@@ -41,7 +41,7 @@
   <div class="trust">
     <div class="wrap">
       <div class="item"><i class="ph-light ph-syringe"></i> <span data-i18n="trust.vaccinated">Vaccinated</span></div>
-      <div class="item"><i class="ph-light ph-heart"></i> <span data-i18n="trust.neutered">Spayed &amp; neutered</span></div>
+      <div class="item"><i class="ph-light ph-heart"></i> <span data-i18n="trust.neutered">Dewormed &amp; flea-treated</span></div>
       <div class="item"><i class="ph-light ph-stethoscope"></i> <span data-i18n="trust.vet">Vet-checked</span></div>
       <div class="item"><i class="ph-light ph-house-line"></i> <span data-i18n="trust.foster">Foster-loved</span></div>
     </div>
@@ -77,6 +77,7 @@
           <a class="btn accent" href="adoption-application.pdf" download><i class="ph-light ph-download-simple"></i> <span data-i18n="cta.download">Download adoption application</span></a>
           <a class="btn secondary" href="mailto:yvette@yalmeida.com?subject=Adoption%20enquiry" data-i18n="cta.ask">Ask a question</a>
         </div>
+        <p class="contact-line" id="ctaContact"></p>
       </div>
     </div>
   </section>
@@ -85,6 +86,8 @@
     <div class="wrap">
       <div class="rule"><span>Piper’s Pals Pet Rescue</span></div>
       <span data-i18n="footer.tagline">Helping rescues find forever homes.</span>
+      <p class="contact-line" id="footerLocation"><i class="ph-light ph-map-pin"></i> <span data-i18n="footer.location">Located in Key Biscayne, Florida</span></p>
+      <p class="contact-line" id="footerContact"></p>
       <div class="footer-admin"><a href="admin.html" data-i18n="footer.staff">Staff login</a></div>
     </div>
   </footer>
@@ -114,7 +117,7 @@
         const photo = (d.photo_urls && d.photo_urls[0]) || "";
         const contact = d.contact_email
           ? `mailto:${esc(d.contact_email)}?subject=${encodeURIComponent("Adopting " + d.name)}`
-          : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : "#");
+          : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : `mailto:${DEFAULT_CONTACT_EMAIL}?subject=${encodeURIComponent("Adopting " + d.name)}`);
         const label = d.status === "adopted" ? t("card.adopted") : t("card.ask", { name: esc(d.name) });
         const profile = `dog.html?id=${encodeURIComponent(d.id)}`;
         return `
@@ -150,7 +153,13 @@
       allDogs = data || [];
       render();
     }
+    function renderContact() {
+      const html = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a> &middot; <a href="tel:${DEFAULT_CONTACT_PHONE}">${DEFAULT_CONTACT_PHONE_DISPLAY}</a>`;
+      ["ctaContact", "footerContact"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
+    }
+
     applyStaticI18n();
+    renderContact();
     load();
   </script>
 </body>
