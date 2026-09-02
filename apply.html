@@ -184,7 +184,7 @@
 
     function renderContact() {
       const el = $("footerContact");
-      if (el) el.innerHTML = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a> &middot; <a href="tel:${DEFAULT_CONTACT_PHONE}">${DEFAULT_CONTACT_PHONE_DISPLAY}</a>`;
+      if (el) el.innerHTML = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a>`;
     }
 
     $("applyForm").addEventListener("submit", async (e) => {

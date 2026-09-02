@@ -170,7 +170,7 @@
       render();
     }
     function renderContact() {
-      const html = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a> &middot; <a href="tel:${DEFAULT_CONTACT_PHONE}">${DEFAULT_CONTACT_PHONE_DISPLAY}</a>`;
+      const html = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a>`;
       ["ctaContact", "footerContact"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
     }
 
