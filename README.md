@@ -1,4 +1,4 @@
-# Piper’s Pals Rescue 🐾
+# Piper’s Pals Pet Rescue 🐾
 
 A simple website to showcase rescued dogs for adoption, with a private admin page for uploading photos and descriptions.
 

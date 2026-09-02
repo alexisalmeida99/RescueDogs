@@ -160,6 +160,12 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 .btn.danger { background: var(--accent-terra-deep); border-color: var(--accent-terra-deep); color: #fff; }
 .btn.danger:hover { filter: brightness(.92); }
 .btn:disabled { opacity: .55; cursor: default; }
+.btn i { vertical-align: -2px; margin-right: 4px; font-size: 1.05em; }
+
+/* Language toggle */
+.lang-toggle { display: inline-flex; gap: 2px; margin-left: var(--sp-4); border: 1px solid var(--line-2); border-radius: var(--r-pill); overflow: hidden; }
+.lang-toggle button { font-family: var(--font-ui); font-size: .7rem; font-weight: 600; letter-spacing: .1em; padding: 5px 11px; background: transparent; color: var(--ink-700); border: none; cursor: pointer; }
+.lang-toggle button.active { background: var(--accent); color: #fff; }
 
 /* ---------- Forms (admin) ---------- */
 .panel { background: var(--bg-surface); border: 1px solid var(--line-1); border-radius: var(--r-lg); box-shadow: var(--shadow-md); padding: var(--sp-7); margin: var(--sp-6) 0; }

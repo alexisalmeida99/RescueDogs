@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piper’s Pals Rescue — Adopt a Rescue</title>
+  <title>Piper’s Pals Pet Rescue — Adopt a Rescue</title>
   <meta name="description" content="Meet rescued dogs looking for a loving forever home. Browse our dogs and reach out to adopt." />
   <link rel="stylesheet" href="colors_and_type.css" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
@@ -12,23 +12,27 @@
 <body>
   <header class="site">
     <div class="wrap">
-      <a href="index.html" class="wordmark">Piper’s Pals Rescue</a>
+      <a href="index.html" class="wordmark">Piper’s Pals Pet Rescue</a>
       <div class="wordmark-divider"></div>
       <nav>
-        <a href="#dogs">Adopt</a>
-        <a href="#adopt">How it works</a>
+        <a href="#dogs" data-i18n="nav.adopt">Adopt</a>
+        <a href="#adopt" data-i18n="nav.how">How it works</a>
+        <span class="lang-toggle">
+          <button data-lang="en">EN</button>
+          <button data-lang="es">ES</button>
+        </span>
       </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="inner">
-      <span class="mvc-eyebrow">Rescued &middot; Loved &middot; Looking for home</span>
-      <h1>Every dog deserves<br /><span class="accent-italic">a second chance</span></h1>
-      <p class="lead">These rescues are ready for a loving home — gentle, vetted and waiting for someone like you.</p>
+      <span class="mvc-eyebrow" data-i18n="hero.eyebrow">Rescued &middot; Loved &middot; Looking for home</span>
+      <h1><span data-i18n="hero.title1">Every dog deserves</span><br /><span class="accent-italic" data-i18n="hero.title2">a second chance</span></h1>
+      <p class="lead" data-i18n="hero.lead">These rescues are ready for a loving home — gentle, vetted and waiting for someone like you.</p>
       <div class="cta-row">
-        <a class="btn light" href="#dogs">Meet the dogs</a>
-        <a class="btn ghost-light" href="#adopt">How adoption works</a>
+        <a class="btn light" href="#dogs" data-i18n="hero.cta1">Meet the dogs</a>
+        <a class="btn ghost-light" href="#adopt" data-i18n="hero.cta2">How adoption works</a>
       </div>
     </div>
   </section>
@@ -36,10 +40,10 @@
   <!-- Trust strip -->
   <div class="trust">
     <div class="wrap">
-      <div class="item"><i class="ph-light ph-syringe"></i> Vaccinated</div>
-      <div class="item"><i class="ph-light ph-heart"></i> Spayed &amp; neutered</div>
-      <div class="item"><i class="ph-light ph-stethoscope"></i> Vet-checked</div>
-      <div class="item"><i class="ph-light ph-house-line"></i> Foster-loved</div>
+      <div class="item"><i class="ph-light ph-syringe"></i> <span data-i18n="trust.vaccinated">Vaccinated</span></div>
+      <div class="item"><i class="ph-light ph-heart"></i> <span data-i18n="trust.neutered">Spayed &amp; neutered</span></div>
+      <div class="item"><i class="ph-light ph-stethoscope"></i> <span data-i18n="trust.vet">Vet-checked</span></div>
+      <div class="item"><i class="ph-light ph-house-line"></i> <span data-i18n="trust.foster">Foster-loved</span></div>
     </div>
   </div>
 
@@ -47,18 +51,18 @@
   <section class="section" id="dogs">
     <div class="wrap">
       <div class="section-head">
-        <span class="mvc-eyebrow">Looking for home</span>
-        <h2>Meet our rescues</h2>
-        <p class="lead">Every dog here has a story and a second chance ahead. Reach out about anyone who steals your heart.</p>
+        <span class="mvc-eyebrow" data-i18n="gallery.eyebrow">Looking for home</span>
+        <h2 data-i18n="gallery.title">Meet our rescues</h2>
+        <p class="lead" data-i18n="gallery.lead">Every dog here has a story and a second chance ahead. Reach out about anyone who steals your heart.</p>
       </div>
       <div class="filters" id="filters">
-        <button data-f="all" class="active">All</button>
-        <button data-f="available">Available</button>
-        <button data-f="pending">Pending</button>
-        <button data-f="adopted">Adopted</button>
+        <button data-f="all" class="active" data-i18n="filter.all">All</button>
+        <button data-f="available" data-i18n="filter.available">Available</button>
+        <button data-f="pending" data-i18n="filter.pending">Pending</button>
+        <button data-f="adopted" data-i18n="filter.adopted">Adopted</button>
       </div>
       <div class="grid" id="grid"></div>
-      <div class="empty" id="empty" style="display:none">No dogs to show right now — please check back soon.</div>
+      <div class="empty" id="empty" style="display:none" data-i18n="empty">No dogs to show right now — please check back soon.</div>
     </div>
   </section>
 
@@ -66,24 +70,28 @@
   <section class="cta" id="adopt">
     <div class="wrap">
       <div class="box">
-        <span class="mvc-eyebrow">How adoption works</span>
-        <h2>Found a dog you love?</h2>
-        <p class="lead">Reach out about any dog above and we&rsquo;ll set up a meet, talk through their needs, and help you find the right fit — never a rushed decision.</p>
-        <a class="btn accent" href="mailto:yvette@yalmeida.com?subject=Adoption%20enquiry">Start an adoption enquiry</a>
+        <span class="mvc-eyebrow" data-i18n="cta.eyebrow">How adoption works</span>
+        <h2 data-i18n="cta.title">Found a dog you love?</h2>
+        <p class="lead" data-i18n="cta.lead">Reach out about any dog above and we&rsquo;ll set up a meet, talk through their needs, and help you find the right fit — never a rushed decision. To get started, download our adoption application, fill it in, and email it back to us.</p>
+        <div class="cta-row" style="justify-content:center">
+          <a class="btn accent" href="adoption-application.pdf" download><i class="ph-light ph-download-simple"></i> <span data-i18n="cta.download">Download adoption application</span></a>
+          <a class="btn secondary" href="mailto:yvette@yalmeida.com?subject=Adoption%20enquiry" data-i18n="cta.ask">Ask a question</a>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="site">
     <div class="wrap">
-      <div class="rule"><span>Piper’s Pals Rescue</span></div>
-      Helping rescues find forever homes.
-      <div class="footer-admin"><a href="admin.html">Staff login</a></div>
+      <div class="rule"><span>Piper’s Pals Pet Rescue</span></div>
+      <span data-i18n="footer.tagline">Helping rescues find forever homes.</span>
+      <div class="footer-admin"><a href="admin.html" data-i18n="footer.staff">Staff login</a></div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
+  <script src="i18n.js"></script>
   <script>
     let allDogs = [];
     let filter = "all";
@@ -93,9 +101,9 @@
     function fmt(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/(^|[^*])\*(?!\s)([^*]+?)\*/g, "$1<em>$2</em>"); }
 
     function metaLine(d) {
-      const bits = [d.breed, d.age, d.sex !== "unknown" ? d.sex : null, d.size !== "unknown" ? d.size : null]
-        .filter(Boolean);
-      return bits.join(" · ");
+      const sex = d.sex && d.sex !== "unknown" ? t("sex." + d.sex) : null;
+      const size = d.size && d.size !== "unknown" ? t("size." + d.size) : null;
+      return [d.breed, d.age, sex, size].filter(Boolean).join(" · ");
     }
 
     function render() {
@@ -107,12 +115,12 @@
         const contact = d.contact_email
           ? `mailto:${esc(d.contact_email)}?subject=${encodeURIComponent("Adopting " + d.name)}`
           : (d.contact_phone ? `tel:${esc(d.contact_phone)}` : "#");
-        const label = d.status === "adopted" ? "Adopted" : "Ask about " + esc(d.name);
+        const label = d.status === "adopted" ? t("card.adopted") : t("card.ask", { name: esc(d.name) });
         const profile = `dog.html?id=${encodeURIComponent(d.id)}`;
         return `
           <div class="card">
             <a class="photo" href="${profile}" style="background-image:url('${esc(photo)}')">
-              <span class="badge ${d.status}">${d.status}</span>
+              <span class="badge ${d.status}">${t("badge." + d.status)}</span>
             </a>
             <div class="body">
               <h3><a class="name-link" href="${profile}">${esc(d.name)}</a></h3>
@@ -125,10 +133,15 @@
     }
 
     document.getElementById("filters").addEventListener("click", e => {
-      if (e.target.tagName !== "BUTTON") return;
-      filter = e.target.dataset.f;
-      [...document.querySelectorAll("#filters button")].forEach(b => b.classList.toggle("active", b === e.target));
+      const btn = e.target.closest("button"); if (!btn) return;
+      filter = btn.dataset.f;
+      [...document.querySelectorAll("#filters button")].forEach(b => b.classList.toggle("active", b === btn));
       render();
+    });
+
+    document.querySelector(".lang-toggle").addEventListener("click", e => {
+      const btn = e.target.closest("button"); if (!btn) return;
+      setLang(btn.dataset.lang, render);
     });
 
     async function load() {
@@ -137,6 +150,7 @@
       allDogs = data || [];
       render();
     }
+    applyStaticI18n();
     load();
   </script>
 </body>
