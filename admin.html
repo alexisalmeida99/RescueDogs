@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Piper’s Pals Pet Rescue</title>
-  <link rel="stylesheet" href="colors_and_type.css?v=3" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="colors_and_type.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="site">
@@ -85,13 +85,16 @@
       <h2>Current dogs</h2>
       <div class="admin-list" id="adminList"></div>
 
+      <h2 style="margin-top:var(--sp-8)">Callback requests</h2>
+      <div class="admin-list" id="cbList"></div>
+
       <h2 style="margin-top:var(--sp-8)">Adoption applications</h2>
       <div class="admin-list" id="appsList"></div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=3"></script>
+  <script src="config.js?v=4"></script>
   <script>
     const $ = id => document.getElementById(id);
     let photoUrls = []; // urls for the dog currently being edited/created
@@ -106,7 +109,7 @@
       $("loginView").style.display = authed ? "none" : "block";
       $("dashView").style.display = authed ? "block" : "none";
       $("signout").style.display = authed ? "inline" : "none";
-      if (authed) { loadDogs(); loadApps(); }
+      if (authed) { loadDogs(); loadApps(); loadCallbacks(); }
     }
 
     $("loginBtn").onclick = async () => {
@@ -260,6 +263,30 @@
       const { error } = await sb.from("applications").delete().eq("id", id);
       if (error) return alert(error.message);
       loadApps();
+    };
+
+    // ---------- Callback requests ----------
+    async function loadCallbacks() {
+      const { data, error } = await sb.from("callbacks").select("*").order("created_at", { ascending: false });
+      if (error) { $("cbList").innerHTML = `<p class="note">${esc(error.message)}</p>`; return; }
+      $("cbList").innerHTML = (data || []).map(c => {
+        const when = (c.created_at || "").slice(0, 10);
+        return `<div class="admin-row" style="flex-wrap:wrap">
+          <div class="info">
+            <b>${esc(c.name || "—")} · ${esc(c.phone || "")}</b>
+            <span>${esc(c.email || "")} · ${esc(when)}${c.message ? " · " + esc(c.message) : ""}</span>
+          </div>
+          <div class="acts">
+            <button class="btn danger" onclick='delCallback(${JSON.stringify(c.id)})'>Delete</button>
+          </div>
+        </div>`;
+      }).join("") || '<p class="note">No callback requests yet.</p>';
+    }
+    window.delCallback = async id => {
+      if (!confirm("Delete this callback request?")) return;
+      const { error } = await sb.from("callbacks").delete().eq("id", id);
+      if (error) return alert(error.message);
+      loadCallbacks();
     };
 
     sb.auth.onAuthStateChange(() => refreshAuth());

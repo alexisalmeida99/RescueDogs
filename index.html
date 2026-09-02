@@ -20,9 +20,9 @@
   <meta name="twitter:description" content="Rescued dogs in Key Biscayne, Florida looking for a loving forever home." />
   <meta name="twitter:image" content="https://piperspalspetrescue.com/og-image.jpg" />
 
-  <link rel="stylesheet" href="colors_and_type.css?v=3" />
+  <link rel="stylesheet" href="colors_and_type.css?v=4" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <header class="site">
@@ -99,6 +99,27 @@
     </div>
   </section>
 
+  <!-- Request a callback -->
+  <section class="section" id="callback">
+    <div class="wrap" style="max-width:640px">
+      <div class="section-head">
+        <span class="mvc-eyebrow" data-i18n="cb.eyebrow">Prefer a call?</span>
+        <h2 data-i18n="cb.title">Request a callback</h2>
+        <p class="lead" data-i18n="cb.lead">Leave your details and we’ll get back to you.</p>
+      </div>
+      <form id="cbForm" class="panel" novalidate>
+        <div id="cbMsg"></div>
+        <div class="row2">
+          <div class="field"><label data-i18n="cb.name">Your name *</label><input name="name" required /></div>
+          <div class="field"><label data-i18n="cb.phone">Phone *</label><input name="phone" required /></div>
+        </div>
+        <div class="field"><label data-i18n="cb.email">Email</label><input name="email" type="email" /></div>
+        <div class="field"><label data-i18n="cb.message">What can we help with? (optional)</label><textarea name="message"></textarea></div>
+        <button class="btn accent" type="submit" id="cbBtn" data-i18n="cb.submit">Request a callback</button>
+      </form>
+    </div>
+  </section>
+
   <footer class="site">
     <div class="wrap">
       <div class="rule"><span>Piper’s Pals Pet Rescue</span></div>
@@ -110,8 +131,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=3"></script>
-  <script src="i18n.js?v=3"></script>
+  <script src="config.js?v=4"></script>
+  <script src="i18n.js?v=4"></script>
   <script>
     let allDogs = [];
     let filter = "all";
@@ -174,6 +195,34 @@
       const html = `<a href="mailto:${DEFAULT_CONTACT_EMAIL}">${DEFAULT_CONTACT_EMAIL}</a>`;
       ["ctaContact", "footerContact"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
     }
+
+    // Callback request
+    document.getElementById("cbForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      document.getElementById("cbBtn").disabled = true;
+      document.getElementById("cbMsg").innerHTML = `<div class="msg ok">${t("cb.sending")}</div>`;
+      const fd = new FormData(form);
+      const rec = { name: fd.get("name"), phone: fd.get("phone"), email: fd.get("email"), message: fd.get("message") };
+      const { error } = await sb.from("callbacks").insert(rec);
+      if (error) {
+        document.getElementById("cbBtn").disabled = false;
+        document.getElementById("cbMsg").innerHTML = `<div class="msg err">${t("cb.error")}</div>`;
+        console.error(error); return;
+      }
+      if (typeof WEB3FORMS_KEY !== "undefined" && WEB3FORMS_KEY) {
+        try {
+          await fetch("https://api.web3forms.com/submit", {
+            method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: `Callback request — ${rec.name || ""}`, from_name: "Piper's Pals website", ...rec })
+          });
+        } catch (_) {}
+      }
+      form.reset();
+      document.getElementById("cbBtn").disabled = false;
+      document.getElementById("cbMsg").innerHTML = `<div class="msg ok">${t("cb.thanks")}</div>`;
+    });
 
     applyStaticI18n();
     renderContact();
