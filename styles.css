@@ -228,6 +228,15 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 .pdf-note a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 2px; }
 .pdf-note a:hover { color: var(--accent-deep); }
 
+/* ---------- Adoption requirement callout ---------- */
+.requirement {
+  display: flex; gap: var(--sp-3); text-align: left;
+  background: var(--bg-blue-soft); border: 1px solid var(--line-1); border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5); margin: var(--sp-5) auto 0; max-width: 640px;
+  font-family: var(--font-ui); font-size: var(--t-small); line-height: 1.55; color: var(--ink-700);
+}
+.requirement i { color: var(--accent-deep); font-size: 1.3rem; flex-shrink: 0; }
+
 /* ---------- Application form page ---------- */
 .apply { padding-top: var(--sp-6); padding-bottom: var(--sp-9); max-width: 860px; }
 .apply .back { display: inline-flex; align-items: center; gap: var(--sp-2); font-family: var(--font-ui); font-size: var(--t-small); font-weight: 600; text-decoration: none; color: var(--accent-deep); margin-bottom: var(--sp-5); }
