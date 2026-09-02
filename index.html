@@ -3,26 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piper’s Pals Pet Rescue — Adopt a Rescue Dog in Key Biscayne, FL</title>
-  <meta name="description" content="Piper’s Pals Pet Rescue in Key Biscayne, Florida. Meet rescued dogs looking for a loving forever home — browse available dogs and start an adoption today." />
+  <title>French Bulldog Rescue &amp; Adoption in Miami — Piper’s Pals Pet Rescue (Key Biscayne, FL)</title>
+  <meta name="description" content="Piper’s Pals Pet Rescue rehomes French Bulldogs and other rescue dogs in Key Biscayne and Miami, Florida. Meet adoptable Frenchies, learn our adoption requirements, and apply to adopt today." />
+  <meta name="keywords" content="French Bulldog rescue, Frenchie rescue, French Bulldog adoption, adopt a French Bulldog, French Bulldog rescue Miami, French Bulldog rescue Florida, dog rescue Miami, pet rescue Key Biscayne, dog adoption Miami, rescue dogs Florida, adopt a rescue dog" />
   <link rel="canonical" href="https://piperspalspetrescue.com/" />
   <meta name="theme-color" content="#213C52" />
+  <meta name="geo.region" content="US-FL" />
+  <meta name="geo.placename" content="Key Biscayne, Miami, Florida" />
+
+  <!-- Structured data: helps Google understand the organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AnimalShelter",
+    "name": "Piper’s Pals Pet Rescue",
+    "description": "French Bulldog and rescue dog adoption in Key Biscayne and Miami, Florida.",
+    "url": "https://piperspalspetrescue.com/",
+    "email": "yvette@yalmeida.com",
+    "image": "https://piperspalspetrescue.com/og-image.jpg",
+    "areaServed": ["Key Biscayne", "Miami", "Florida"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Key Biscayne",
+      "addressRegion": "FL",
+      "addressCountry": "US"
+    },
+    "knowsAbout": ["French Bulldog rescue", "French Bulldog adoption", "dog rescue", "pet adoption"]
+  }
+  </script>
 
   <!-- Open Graph / social preview -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Piper’s Pals Pet Rescue" />
-  <meta property="og:title" content="Piper’s Pals Pet Rescue — Adopt a Rescue Dog" />
-  <meta property="og:description" content="Rescued dogs in Key Biscayne, Florida looking for a loving forever home. Meet them and start an adoption." />
+  <meta property="og:title" content="French Bulldog Rescue &amp; Adoption in Miami — Piper’s Pals Pet Rescue" />
+  <meta property="og:description" content="Adopt a rescued French Bulldog or small-breed dog in Key Biscayne / Miami, Florida. Meet our dogs and apply today." />
   <meta property="og:url" content="https://piperspalspetrescue.com/" />
   <meta property="og:image" content="https://piperspalspetrescue.com/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Piper’s Pals Pet Rescue — Adopt a Rescue Dog" />
-  <meta name="twitter:description" content="Rescued dogs in Key Biscayne, Florida looking for a loving forever home." />
+  <meta name="twitter:title" content="French Bulldog Rescue &amp; Adoption in Miami — Piper’s Pals Pet Rescue" />
+  <meta name="twitter:description" content="Adopt a rescued French Bulldog or small-breed dog in Key Biscayne / Miami, Florida." />
   <meta name="twitter:image" content="https://piperspalspetrescue.com/og-image.jpg" />
 
-  <link rel="stylesheet" href="colors_and_type.css?v=6" />
+  <link rel="stylesheet" href="colors_and_type.css?v=7" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <header class="site">
@@ -120,6 +144,14 @@
     </div>
   </section>
 
+  <!-- About / SEO content -->
+  <section class="section" id="about" style="padding-top:0">
+    <div class="wrap" style="max-width:720px;text-align:center">
+      <h2 data-i18n="about.title">French Bulldog rescue in Key Biscayne &amp; Miami, Florida</h2>
+      <p class="lead" data-i18n="about.body">Piper’s Pals Pet Rescue is a Key Biscayne–based rescue serving the Miami, Florida area. Most of our dogs are French Bulldogs — a breed we know and love — along with other small-breed rescues looking for a loving forever home. Because Frenchies have specific needs and potential health issues, we match every adoption carefully and ask that adopters have prior experience with French Bulldogs or a similar short-nosed breed. Browse our adoptable dogs above and start your adoption application today.</p>
+    </div>
+  </section>
+
   <footer class="site">
     <div class="wrap">
       <div class="rule"><span>Piper’s Pals Pet Rescue</span></div>
@@ -131,8 +163,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=6"></script>
-  <script src="i18n.js?v=6"></script>
+  <script src="config.js?v=7"></script>
+  <script src="i18n.js?v=7"></script>
   <script>
     let allDogs = [];
     let filter = "all";
