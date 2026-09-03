@@ -219,6 +219,13 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 
 @media (max-width: 720px) { .profile-grid { grid-template-columns: 1fr; gap: var(--sp-6); } }
 
+/* ---------- Our story / about page ---------- */
+.story { padding-top: var(--sp-9); padding-bottom: var(--sp-9); }
+.story .section-head { margin-left: auto; margin-right: auto; }
+.story-body { max-width: 640px; margin: 0 auto; }
+.story-body p { font-size: var(--t-lead); line-height: 1.75; color: var(--fg-2); margin: 0 0 var(--sp-5); }
+.story-body p:first-of-type::first-letter { font-family: var(--font-display); font-size: 3.2em; line-height: .8; float: left; margin: 6px 12px 0 0; color: var(--accent-terra-deep); }
+
 /* ---------- Quiet PDF fallback note ---------- */
 .pdf-note { font-family: var(--font-ui); font-size: var(--t-small); color: var(--fg-3); margin: var(--sp-4) 0 0; }
 .pdf-note a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 2px; }
