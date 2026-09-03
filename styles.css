@@ -214,6 +214,7 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 .pthumb { width: 84px; height: 84px; border-radius: var(--r-sm); background: var(--bg-sunken) center/cover; cursor: pointer; border: 2px solid transparent; transition: border-color .2s; }
 .pthumb:hover { border-color: var(--line-2); }
 .pthumb.active { border-color: var(--accent); }
+.profile-video { width: 100%; margin-top: var(--sp-3); border-radius: var(--r-lg); box-shadow: var(--shadow-md); display: block; background: #000; }
 .profile-info { padding-top: var(--sp-3); }
 .profile-info .mvc-eyebrow { display: block; margin-bottom: var(--sp-3); }
 .profile-info h1 { font-family: var(--font-display); font-weight: 500; font-size: var(--t-h1); margin: 0 0 var(--sp-2); }

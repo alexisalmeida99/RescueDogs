@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Piper’s Pals Pet Rescue</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="stylesheet" href="colors_and_type.css?v=8" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="colors_and_type.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
   <header class="site">
@@ -76,6 +76,12 @@
           <div class="note">Upload one or more photos. The first photo is shown on the card.</div>
           <div class="thumbs" id="thumbs"></div>
         </div>
+        <div class="field">
+          <label>Video (optional)</label>
+          <input id="f_video" type="file" accept="video/*" />
+          <div class="note">One short clip, up to ~50 MB. Plays on the dog’s profile page.</div>
+          <div id="videoPreview"></div>
+        </div>
         <div style="display:flex;gap:10px;margin-top:8px">
           <button class="btn" id="saveBtn">Save dog</button>
           <button class="btn ghost" id="cancelBtn" style="display:none">Cancel edit</button>
@@ -94,10 +100,11 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=8"></script>
+  <script src="config.js?v=9"></script>
   <script>
     const $ = id => document.getElementById(id);
     let photoUrls = []; // urls for the dog currently being edited/created
+    let videoUrl = "";  // single optional video for the dog being edited/created
 
     function msg(el, text, kind) { el.innerHTML = text ? `<div class="msg ${kind}">${text}</div>` : ""; }
     function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
@@ -143,9 +150,31 @@
       msg($("formMsg"), "", ""); $("saveBtn").disabled = false; e.target.value = "";
     };
 
+    // ---------- Video ----------
+    function renderVideo() {
+      $("videoPreview").innerHTML = videoUrl
+        ? `<div style="margin-top:10px"><video src="${esc(videoUrl)}" controls style="max-width:240px;border-radius:8px;display:block"></video>
+             <button type="button" class="btn ghost" style="margin-top:6px" onclick="removeVideo()">Remove video</button></div>`
+        : "";
+    }
+    window.removeVideo = () => { videoUrl = ""; renderVideo(); };
+    $("f_video").onchange = async (e) => {
+      const file = e.target.files[0]; if (!file) return;
+      if (file.size > 50 * 1024 * 1024) { msg($("formMsg"), "Video is over 50 MB — please use a shorter/smaller clip.", "err"); e.target.value = ""; return; }
+      $("saveBtn").disabled = true; msg($("formMsg"), "Uploading video…", "ok");
+      const ext = (file.name.split(".").pop() || "mp4").toLowerCase();
+      const path = `videos/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+      const { error } = await sb.storage.from("dog-photos").upload(path, file, { upsert: false, contentType: file.type });
+      if (error) { msg($("formMsg"), "Video upload failed: " + error.message, "err"); $("saveBtn").disabled = false; e.target.value = ""; return; }
+      videoUrl = sb.storage.from("dog-photos").getPublicUrl(path).data.publicUrl;
+      renderVideo();
+      msg($("formMsg"), "", ""); $("saveBtn").disabled = false; e.target.value = "";
+    };
+
     // ---------- Form ----------
     function resetForm() {
       $("dogId").value = ""; photoUrls = []; renderThumbs();
+      videoUrl = ""; renderVideo();
       ["f_name","f_breed","f_age","f_desc","f_email","f_phone"].forEach(id => $(id).value = "");
       $("f_status").value = "available"; $("f_sex").value = "unknown"; $("f_size").value = "unknown";
       $("formTitle").textContent = "Add a dog"; $("cancelBtn").style.display = "none";
@@ -157,7 +186,7 @@
       const record = {
         name: $("f_name").value.trim(), breed: $("f_breed").value.trim(), age: $("f_age").value.trim(),
         sex: $("f_sex").value, size: $("f_size").value, description: $("f_desc").value.trim(),
-        status: $("f_status").value, photo_urls: photoUrls,
+        status: $("f_status").value, photo_urls: photoUrls, video_url: videoUrl || null,
         contact_email: $("f_email").value.trim(), contact_phone: $("f_phone").value.trim()
       };
       const id = $("dogId").value;
@@ -191,6 +220,7 @@
       $("f_age").value = d.age||""; $("f_desc").value = d.description||""; $("f_email").value = d.contact_email||"";
       $("f_phone").value = d.contact_phone||""; $("f_status").value = d.status; $("f_sex").value = d.sex; $("f_size").value = d.size;
       photoUrls = [...(d.photo_urls||[])]; renderThumbs();
+      videoUrl = d.video_url || ""; renderVideo();
       $("formTitle").textContent = "Edit " + d.name; $("cancelBtn").style.display = "inline-block";
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
