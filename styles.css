@@ -35,19 +35,15 @@ header.site nav a:hover { color: var(--accent-deep); }
 
 /* ---------- Full-bleed warm hero (from HeroFullbleed + Scene) ---------- */
 .hero {
-  position: relative; min-height: 76vh; display: flex; align-items: center; justify-content: center;
+  position: relative; min-height: 82vh; display: flex; align-items: flex-start; justify-content: center;
   text-align: center; overflow: hidden;
-  background: radial-gradient(120% 90% at 75% 15%, #F4E7D2 0%, #E7CFAE 38%, #D6A985 70%, #B6815f 100%);
+  background: #cdb79a url('images/hero.jpg') center bottom / cover no-repeat;
 }
-.hero::before { /* warm overlay scrim for legibility */
+.hero::before { /* top-heavy scrim: darkens the text area, keeps the dogs bright below */
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(44,38,31,.18) 0%, rgba(44,38,31,.46) 100%);
+  background: linear-gradient(180deg, rgba(38,32,26,.62) 0%, rgba(38,32,26,.34) 34%, rgba(38,32,26,.06) 58%, rgba(38,32,26,0) 74%);
 }
-.hero::after { /* soft sun bloom */
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(60% 50% at 78% 12%, rgba(255,248,235,.5), transparent 60%);
-}
-.hero .inner { position: relative; z-index: 2; max-width: 760px; padding: var(--sp-9) var(--sp-6); display: flex; flex-direction: column; align-items: center; gap: var(--sp-5); }
+.hero .inner { position: relative; z-index: 2; max-width: 760px; padding: var(--sp-9) var(--sp-6) var(--sp-7); display: flex; flex-direction: column; align-items: center; gap: var(--sp-5); }
 .hero .mvc-eyebrow { color: rgba(247,241,232,.92); }
 .hero h1 {
   font-family: var(--font-display); font-weight: 500; color: #FBF6EE; margin: 0;
