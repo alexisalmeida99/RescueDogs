@@ -34,24 +34,17 @@ header.site nav a {
 header.site nav a:hover { color: var(--accent-deep); }
 
 /* ---------- Full-bleed warm hero (from HeroFullbleed + Scene) ---------- */
-.hero {
-  position: relative; min-height: 84vh; display: flex; align-items: flex-start; justify-content: center;
-  text-align: center; overflow: hidden;
-  background: #d8c4a6 url('images/hero.jpg?v=2') center bottom / cover no-repeat;
-}
-.hero::before { /* soft light wash on the top space — keeps dark text crisp without tinting the dogs */
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(247,241,232,.72) 0%, rgba(247,241,232,.4) 26%, rgba(247,241,232,.08) 46%, transparent 62%);
-}
-.hero .inner { position: relative; z-index: 2; max-width: 760px; padding: var(--sp-8) var(--sp-6) var(--sp-7); display: flex; flex-direction: column; align-items: center; gap: var(--sp-4); }
-.hero .mvc-eyebrow { color: var(--accent-deep); }
-.hero h1 {
+.hero { background: var(--bg-page); text-align: center; padding: var(--sp-5) 0 var(--sp-8); }
+.hero .wrap { display: flex; flex-direction: column; align-items: center; }
+.hero-banner { width: 100%; max-width: 940px; height: auto; display: block; }
+.hero-cta { max-width: 640px; margin-top: var(--sp-3); display: flex; flex-direction: column; align-items: center; gap: var(--sp-4); }
+.hero-tagline {
   font-family: var(--font-display); font-weight: 500; color: var(--ink-900); margin: 0;
-  font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.06; letter-spacing: .01em;
+  font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.08; letter-spacing: .01em;
 }
-.hero h1 .accent-italic { font-family: var(--font-accent); font-style: italic; color: var(--accent-terra-deep); }
+.hero-tagline .accent-italic { font-family: var(--font-accent); font-style: italic; color: var(--accent-terra-deep); }
 .hero .lead { color: var(--ink-700); max-width: 560px; margin: 0; }
-.hero .cta-row { display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap; margin-top: var(--sp-3); }
+.hero .cta-row { display: flex; gap: var(--sp-3); justify-content: center; flex-wrap: wrap; }
 
 /* ---------- Trust strip ---------- */
 .trust { border-top: 1px solid var(--line-1); border-bottom: 1px solid var(--line-1); background: var(--bg-accent-soft); }
@@ -222,9 +215,9 @@ footer.site .rule { margin-bottom: var(--sp-4); }
 /* ---------- Our story / about page ---------- */
 .story { padding-top: var(--sp-9); padding-bottom: var(--sp-9); }
 .story .section-head { margin-left: auto; margin-right: auto; }
-.story-photo { max-width: 420px; margin: 0 auto var(--sp-7); text-align: center; }
-.story-photo img { width: 100%; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); display: block; }
-.story-photo figcaption { font-family: var(--font-accent); font-style: italic; font-size: var(--t-body); color: var(--fg-3); margin-top: var(--sp-3); }
+.story-photo { max-width: 560px; margin: 0 auto var(--sp-6); text-align: center; }
+.story-photo img { width: 100%; display: block; }
+.story-photo figcaption { font-family: var(--font-accent); font-style: italic; font-size: var(--t-body); color: var(--fg-3); margin-top: var(--sp-2); }
 .story-body { max-width: 640px; margin: 0 auto; }
 .story-body p { font-size: var(--t-lead); line-height: 1.75; color: var(--fg-2); margin: 0 0 var(--sp-5); }
 .story-body p:first-of-type::first-letter { font-family: var(--font-display); font-size: 3.2em; line-height: .8; float: left; margin: 6px 12px 0 0; color: var(--accent-terra-deep); }
